@@ -1,5 +1,6 @@
 node_modules
 dist
+adx-kusto-bolt
 npm-debug.log
 .DS_Store
 .vscode

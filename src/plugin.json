@@ -1,7 +1,7 @@
 {
   "type": "datasource",
-  "name": "Azure Data Explorer Datasource",
-  "id": "grafana-azure-data-explorer-datasource",
+  "name": "Azure Data Explorer Datasource - By Bolt",
+  "id": "grafana-azure-data-explorer-datasource-by-bolt",
   "info": {
     "description": "Grafana data source for Azure Data Explorer",
     "author": {
@@ -63,7 +63,7 @@
   },
   "metrics": true,
   "annotations": true,
-  "backend": true,
+  "backend": false,
   "executable": "gpx_adx",
   "alerting": true
 }

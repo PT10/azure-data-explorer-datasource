@@ -6,6 +6,7 @@
     "build": "grafana-toolkit plugin:build",
     "test": "grafana-toolkit plugin:test",
     "dev": "grafana-toolkit plugin:dev",
+    "postdev": "rm -rf adx-kusto-bolt; mv dist adx-kusto-bolt",
     "watch": "grafana-toolkit plugin:dev --watch"
   },
   "author": "Grafana Labs",
@@ -30,7 +31,10 @@
     "eslint-plugin-prettier": "3.1.4",
     "eslint-plugin-react-hooks": "4.0.5",
     "jest-environment-jsdom-sixteen": "^1.0.3",
-    "monaco-editor": "0.17.0"
+    "monaco-editor": "0.17.0",
+    "react": "^16.13.1",
+    "react-dom": "latest",
+    "react-scripts": "latest"
   },
   "dependencies": {
     "debounce-promise": "^3.1.2",
