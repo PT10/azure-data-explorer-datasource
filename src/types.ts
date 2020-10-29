@@ -26,6 +26,10 @@ export interface KustoQuery extends DataQuery {
   rawMode?: boolean;
   querySource: QuerySource;
   pluginVersion: string;
+  pivot: string;
+  realTime: string;
+  dimention: string;
+  logLimit: number;
 }
 
 export interface AutoCompleteQuery {
@@ -40,7 +44,10 @@ export enum EditorMode {
   Raw = 'raw',
 }
 
-export const defaultQuery: Pick<KustoQuery, 'query' | 'expression' | 'querySource' | 'pluginVersion'> = {
+export const defaultQuery: Pick<
+  KustoQuery,
+  'query' | 'expression' | 'querySource' | 'pluginVersion' | 'pivot' | 'realTime' | 'dimention' | 'logLimit'
+> = {
   query: '',
   querySource: EditorMode.Raw,
   expression: {
@@ -58,12 +65,14 @@ export const defaultQuery: Pick<KustoQuery, 'query' | 'expression' | 'querySourc
     },
   },
   pluginVersion: packageJson.version,
+  pivot: 'false',
+  realTime: 'false',
+  dimention: 'single',
+  logLimit: 100,
 };
 
 export interface AdxDataSourceOptions extends DataSourceJsonData {
-  defaultDatabase: string;
-  minimalCache: number;
-  defaultEditorMode: EditorMode;
+  connUrl?: string;
 }
 
 export interface AdxSchema {

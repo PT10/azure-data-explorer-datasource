@@ -1,12 +1,12 @@
 {
   "type": "datasource",
-  "name": "Azure Data Explorer Datasource - By Bolt",
+  "name": "AlertLens - kusto - Adx",
   "id": "grafana-azure-data-explorer-datasource-by-bolt",
   "info": {
-    "description": "Grafana data source for Azure Data Explorer",
+    "description": "Bolt plugin for Kusto",
     "author": {
-      "name": "Grafana Labs",
-      "url": "https://grafana.com"
+      "name": "Bolt Analytics",
+      "url": ""
     },
     "keywords": [
       "azure",
