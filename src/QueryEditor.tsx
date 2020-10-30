@@ -69,33 +69,15 @@ export const QueryEditor: React.FC<Props> = props => {
     });
   }, [onChange, query, rawMode]);
 
-  const onChangePivot = useCallback(() => {
-    onChange({
-      ...query,
-      pivot,
-    });
-  }, [onChange, query, pivot]);
+  const onFieldValueChange = (event: any, _name?: string) => {
+    const name = _name ? _name : event.target.name;
+    const value = event.target.value;
 
-  const onChangeRealTime = useCallback(() => {
     onChange({
       ...query,
-      realTime,
+      [name]: value,
     });
-  }, [onChange, query, realTime]);
-
-  const onChangeLogLimit = useCallback(() => {
-    onChange({
-      ...query,
-      logLimit,
-    });
-  }, [onChange, query, logLimit]);
-
-  const onChangeDimention = useCallback(() => {
-    onChange({
-      ...query,
-      dimention,
-    });
-  }, [onChange, query, dimention]);
+  };
 
   if (schema.loading) {
     return <SchemaLoading />;
@@ -169,14 +151,14 @@ export const QueryEditor: React.FC<Props> = props => {
       <div className="gf-form-inline">
         <div className="gf-form">
           <InlineFormLabel>Pivot</InlineFormLabel>
-          <select value={pivot} name="pivot" onChange={onChangePivot}>
+          <select value={pivot} name="pivot" onChange={onFieldValueChange}>
             <option value={'true'}>{'True'}</option>
             <option value={'false'}>{'False'}</option>
           </select>
         </div>
         <div className="gf-form">
           <InlineFormLabel>Real Time</InlineFormLabel>
-          <select value={realTime} name="realTime" onChange={onChangeRealTime}>
+          <select value={realTime} name="realTime" onChange={onFieldValueChange}>
             <option value={'true'}>{'True'}</option>
             <option value={'false'}>{'False'}</option>
           </select>
@@ -188,12 +170,12 @@ export const QueryEditor: React.FC<Props> = props => {
             value={logLimit}
             width={4}
             name="logLimit"
-            onChange={onChangeLogLimit}
+            onChange={onFieldValueChange}
           ></FormField>
         </div>
         <div className="gf-form">
           <InlineFormLabel>Frame type</InlineFormLabel>
-          <select value={dimention} name="dimention" onChange={onChangeDimention}>
+          <select value={dimention} name="dimention" onChange={onFieldValueChange}>
             <option value={'single'}>{'Single'}</option>
             <option value={'multiple'}>{'Multiple'}</option>
           </select>
