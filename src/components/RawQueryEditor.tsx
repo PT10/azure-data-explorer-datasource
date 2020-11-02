@@ -75,30 +75,32 @@ export class RawQueryEditor extends PureComponent<RawQueryEditorProps, State> {
           onExecute={this.props.onRunQuery}
         />
 
-        <div className={styles.toolbar}>
-          <QueryEditorResultFormat
-            includeAdxTimeFormat={true}
-            format={resultFormat}
-            onChangeFormat={this.onChangeResultFormat}
-          />
-          <div className="gf-form">
-            <label className="gf-form-label query-keyword" onClick={() => this.setState({ showHelp: !showHelp })}>
-              Show Help <Icon name={showHelp ? 'angle-down' : 'angle-right'} />
-            </label>
-          </div>
-          <div className="gf-form" ng-show="ctrl.lastQuery">
-            <label
-              className="gf-form-label query-keyword"
-              onClick={() => this.setState({ showLastQuery: !showLastQuery })}
-            >
-              Raw Query <Icon name={showLastQuery ? 'angle-down' : 'angle-right'} />
-            </label>
-          </div>
+        {false && (
+          <div className={styles.toolbar}>
+            <QueryEditorResultFormat
+              includeAdxTimeFormat={true}
+              format={resultFormat}
+              onChangeFormat={this.onChangeResultFormat}
+            />
+            <div className="gf-form">
+              <label className="gf-form-label query-keyword" onClick={() => this.setState({ showHelp: !showHelp })}>
+                Show Help <Icon name={showHelp ? 'angle-down' : 'angle-right'} />
+              </label>
+            </div>
+            <div className="gf-form" ng-show="ctrl.lastQuery">
+              <label
+                className="gf-form-label query-keyword"
+                onClick={() => this.setState({ showLastQuery: !showLastQuery })}
+              >
+                Raw Query <Icon name={showLastQuery ? 'angle-down' : 'angle-right'} />
+              </label>
+            </div>
 
-          <div className="gf-form gf-form--grow">
-            <div className="gf-form-label gf-form-label--grow"></div>
+            <div className="gf-form gf-form--grow">
+              <div className="gf-form-label gf-form-label--grow"></div>
+            </div>
           </div>
-        </div>
+        )}
 
         {showLastQuery && (
           <div className="gf-form">

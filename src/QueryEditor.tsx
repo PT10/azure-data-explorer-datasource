@@ -4,7 +4,7 @@ import { QueryEditorProps, PanelData } from '@grafana/data';
 // Hack for issue: https://github.com/grafana/grafana/issues/26512
 import {} from '@emotion/core';
 import { AdxDataSource } from './datasource';
-import { KustoQuery, AdxDataSourceOptions, AdxSchema, EditorMode } from 'types';
+import { KustoQuery, AdxDataSourceOptions, EditorMode } from 'types';
 import { QueryEditorPropertyDefinition } from './editor/types';
 import { RawQueryEditor } from './components/RawQueryEditor';
 import { databaseToDefinition } from './schema/mapper';
@@ -12,6 +12,9 @@ import { VisualQueryEditor } from './components/VisualQueryEditor';
 import { QueryEditorToolbar } from './components/QueryEditorToolbar';
 import { SchemaLoading } from 'components/SchemaMessages';
 import { needsToBeMigrated, migrateQuery } from 'migrations/query';
+import { InlineFormLabel } from '@grafana/ui';
+import { LegacyForms } from '@grafana/ui';
+const { FormField } = LegacyForms;
 
 type Props = QueryEditorProps<AdxDataSource, KustoQuery, AdxDataSourceOptions>;
 
@@ -25,6 +28,10 @@ export const QueryEditor: React.FC<Props> = props => {
   const databases = useDatabaseOptions(schema.value);
   const database = useSelectedDatabase(databases, props.query, datasource);
   const rawMode = isRawMode(props);
+  const pivot = props.query.pivot;
+  const realTime = props.query.realTime;
+  const logLimit = props.query.logLimit;
+  const dimention = props.query.dimention;
 
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
@@ -61,6 +68,16 @@ export const QueryEditor: React.FC<Props> = props => {
       querySource: rawMode ? EditorMode.Visual : EditorMode.Raw,
     });
   }, [onChange, query, rawMode]);
+
+  const onFieldValueChange = (event: any, _name?: string) => {
+    const name = _name ? _name : event.target.name;
+    const value = event.target.value;
+
+    onChange({
+      ...query,
+      [name]: value,
+    });
+  };
 
   if (schema.loading) {
     return <SchemaLoading />;
@@ -131,6 +148,39 @@ export const QueryEditor: React.FC<Props> = props => {
           templateVariableOptions={templateVariables}
         />
       )}
+      <div className="gf-form-inline">
+        <div className="gf-form">
+          <InlineFormLabel>Pivot</InlineFormLabel>
+          <select value={pivot} name="pivot" onChange={onFieldValueChange}>
+            <option value={'true'}>{'True'}</option>
+            <option value={'false'}>{'False'}</option>
+          </select>
+        </div>
+        <div className="gf-form">
+          <InlineFormLabel>Real Time</InlineFormLabel>
+          <select value={realTime} name="realTime" onChange={onFieldValueChange}>
+            <option value={'true'}>{'True'}</option>
+            <option value={'false'}>{'False'}</option>
+          </select>
+        </div>
+        <div className="gf-form">
+          <FormField
+            label="Log Limit"
+            type="number"
+            value={logLimit}
+            width={4}
+            name="logLimit"
+            onChange={onFieldValueChange}
+          ></FormField>
+        </div>
+        <div className="gf-form">
+          <InlineFormLabel>Frame type</InlineFormLabel>
+          <select value={dimention} name="dimention" onChange={onFieldValueChange}>
+            <option value={'single'}>{'Single'}</option>
+            <option value={'multiple'}>{'Multiple'}</option>
+          </select>
+        </div>
+      </div>
     </>
   );
 };
@@ -161,7 +211,7 @@ const useSelectedDatabase = (
   }, [options, query.database, datasource.variables]);
 };
 
-const useDatabaseOptions = (schema?: AdxSchema): QueryEditorPropertyDefinition[] => {
+const useDatabaseOptions = (schema?: any): QueryEditorPropertyDefinition[] => {
   return useMemo(() => {
     const databases: QueryEditorPropertyDefinition[] = [];
 

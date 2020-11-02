@@ -8,9 +8,7 @@ export interface QueryEditorSectionProps {
 export const QueryEditorSection: React.FC<PropsWithChildren<QueryEditorSectionProps>> = props => {
   return (
     <div className="gf-form">
-      <InlineFormLabel className="query-keyword" width={12}>
-        {props.label}
-      </InlineFormLabel>
+      <InlineFormLabel className="query-keyword">{props.label}</InlineFormLabel>
       {props.children}
     </div>
   );

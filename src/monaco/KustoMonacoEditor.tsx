@@ -8,7 +8,7 @@ import React from 'react';
 import { AdxSchema } from '../types';
 import KustoCodeEditor from './kusto_code_editor';
 import { css } from 'emotion';
-import { stylesFactory } from '@grafana/ui';
+import { InlineFormLabel, stylesFactory } from '@grafana/ui';
 
 import config from 'grafana/app/core/config';
 
@@ -85,12 +85,19 @@ export class KustoMonacoEditor extends React.Component<Props, MonacoState> {
 
   getStyles = stylesFactory(() => ({
     editor: css`
-      width: 100%;
-      height: 350px;
+      width: 70%;
+      height: 60px;
     `,
   }));
 
   render() {
-    return <div id="content" tabIndex={0} className={this.styles.editor} ref={this.monacoRef}></div>;
+    return (
+      <div className="gf-form-inline">
+        <div className="gf-form" style={{ width: '100%', height: '70px' }}>
+          <InlineFormLabel>Query</InlineFormLabel>
+          <div id="content" tabIndex={0} className={this.styles.editor} ref={this.monacoRef}></div>
+        </div>
+      </div>
+    );
   }
 }
