@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { AsyncSelect } from '@grafana/ui';
+import { AsyncSelect, Input } from '@grafana/ui';
 import { ExpressionSuggestor } from '../types';
 import { QueryEditorOperatorDefinition, QueryEditorOperator } from '../../types';
 import { SelectableValue } from '@grafana/data';
@@ -26,7 +26,7 @@ export class QueryEditorSingleOperator extends PureComponent<Props, State> {
     };
   }
 
-  onChange = (evt: SelectableValue<any>) => {
+  onChange = (evt: any) => {
     // Handle clearing the value
     if (evt === null) {
       this.props.onChange({
@@ -36,7 +36,7 @@ export class QueryEditorSingleOperator extends PureComponent<Props, State> {
       return;
     }
     this.props.onChange({
-      value: `${evt.value}`, // Currently strings only
+      value: `${evt.target.value}`, // Currently strings only
       name: this.props.operator.value,
     });
   };
@@ -74,21 +74,26 @@ export class QueryEditorSingleOperator extends PureComponent<Props, State> {
       : undefined;
 
     return (
-      <AsyncSelect
-        width={30}
-        placeholder="Start typing to add filters..."
-        loadOptions={this.getSuggestions}
-        onOpenMenu={() => this.getSuggestions(value ?? '')}
-        defaultOptions={this.state.defaultOptions}
-        isLoading={this.state.isLoading}
-        value={current}
-        onChange={this.onChange}
-        onCreateOption={this.onCreate}
-        allowCustomValue={true}
-        backspaceRemovesValue
-        isClearable
-        noOptionsMessage="No options found"
-      />
+      <div>
+        <Input label="" type="text" value={value} width={30} name="filter" onChange={this.onChange}></Input>
+        {false && (
+          <AsyncSelect
+            width={30}
+            placeholder="Start typing to add filters..."
+            loadOptions={this.getSuggestions}
+            onOpenMenu={() => this.getSuggestions(value ?? '')}
+            defaultOptions={this.state.defaultOptions}
+            isLoading={this.state.isLoading}
+            value={current}
+            onChange={this.onChange}
+            onCreateOption={this.onCreate}
+            allowCustomValue={true}
+            backspaceRemovesValue
+            isClearable
+            noOptionsMessage="No options found"
+          />
+        )}
+      </div>
     );
   }
 }
