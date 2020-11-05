@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 const packageJson = require('../package.json');
 
 import { DataQuery, DataSourceJsonData } from '@grafana/data';
@@ -46,7 +47,7 @@ export enum EditorMode {
 
 export const defaultQuery: Pick<
   KustoQuery,
-  'query' | 'expression' | 'querySource' | 'pluginVersion' | 'pivot' | 'realTime' | 'dimention' | 'logLimit'
+  'query' | 'expression' | 'database' | 'querySource' | 'pluginVersion' | 'pivot' | 'realTime' | 'dimention' | 'logLimit'
 > = {
   query: '',
   querySource: EditorMode.Raw,
@@ -64,6 +65,7 @@ export const defaultQuery: Pick<
       expressions: [],
     },
   },
+  database: '',
   pluginVersion: packageJson.version,
   pivot: 'false',
   realTime: 'false',

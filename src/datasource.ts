@@ -152,6 +152,7 @@ export class AdxDataSource extends DataSourceWithBackend<KustoQuery, AdxDataSour
           panelId: panelId,
           query: q,
           type: 'query',
+          database: queryObj.database,
           pivot: JSON.parse(queryObj.pivot),
           realTime: JSON.parse(queryObj.realTime) && relativeTime,
         })
@@ -168,6 +169,7 @@ export class AdxDataSource extends DataSourceWithBackend<KustoQuery, AdxDataSour
           panelId: panelId,
           query: q,
           type: 'query',
+          database: queryObj.database,
           pivot: JSON.parse(queryObj.pivot),
           realTime: JSON.parse(queryObj.realTime) && relativeTime,
         })
