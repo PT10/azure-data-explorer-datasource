@@ -312,7 +312,8 @@ const withPrefix = (value: string, prefix?: string): string => {
 };
 
 const defaultTimeColumn = (columns?: AdxColumnSchema[], expression?: QueryExpression): string | undefined => {
-  if (Array.isArray(expression?.groupBy.expressions)) {
+  return;
+  /* if (Array.isArray(expression?.groupBy.expressions)) {
     const groupByTimeColumn = expression?.groupBy.expressions.find(exp => {
       if (!isGroupBy(exp)) {
         return false;
@@ -343,7 +344,7 @@ const defaultTimeColumn = (columns?: AdxColumnSchema[], expression?: QueryExpres
     return column;
   }
 
-  return toDynamic(column);
+  return toDynamic(column); */
 };
 
 const isDynamic = (column: string): boolean => {

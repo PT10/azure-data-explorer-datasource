@@ -21,7 +21,7 @@ import { definitionToProperty } from '../editor/components/field/QueryEditorFiel
 import { isFieldExpression } from '../editor/guards';
 import { AdxDataSource } from '../datasource';
 import { AdxSchemaResolver } from '../schema/AdxSchemaResolver';
-import { QueryEditorResultFormat, selectResultFormat } from '../components/QueryEditorResultFormat';
+import { /* QueryEditorResultFormat,  */ selectResultFormat } from '../components/QueryEditorResultFormat';
 import { TextArea, stylesFactory } from '@grafana/ui';
 import { SelectableValue } from '@grafana/data';
 import { SchemaLoading, SchemaError, SchemaWarning } from '../components/SchemaMessages';
@@ -45,7 +45,7 @@ export const VisualQueryEditor: React.FC<Props> = props => {
   const tables = useTableOptions(schema, databaseName);
   const table = useSelectedTable(tables, query, datasource);
   const tableName = getTemplateSrv().replace(table?.property.name ?? '');
-  const timeshiftOptions = useTimeshiftOptions();
+  //const timeshiftOptions = useTimeshiftOptions();
 
   const tableSchema = useAsync(async () => {
     if (!table || !table.property) {
@@ -167,6 +167,7 @@ export const VisualQueryEditor: React.FC<Props> = props => {
     [onChangeQuery, query, tableSchema.value, resultFormat, database, table, parseExpression]
   );
 
+  /* 
   const onChangeResultFormat = useCallback(
     (format: string) => {
       const next = {
@@ -182,9 +183,9 @@ export const VisualQueryEditor: React.FC<Props> = props => {
       });
     },
     [onChangeQuery, table, database, query]
-  );
+  ); */
 
-  const onChangeTimeshift = useCallback(
+  /* const onChangeTimeshift = useCallback(
     (expression: QueryEditorExpression) => {
       if (!isFieldExpression(expression) || !table) {
         return;
@@ -206,7 +207,7 @@ export const VisualQueryEditor: React.FC<Props> = props => {
       });
     },
     [onChangeQuery, query, resultFormat, database, table, parseExpression, tableSchema.value]
-  );
+  ); */
 
   if (tableSchema.loading) {
     return (
@@ -264,11 +265,11 @@ export const VisualQueryEditor: React.FC<Props> = props => {
         fields={tables}
         onChange={onChangeTable}
       >
-        <QueryEditorResultFormat
+        {/*<QueryEditorResultFormat
           format={resultFormat}
           includeAdxTimeFormat={false}
           onChangeFormat={onChangeResultFormat}
-        />
+        />*/}
       </KustoPropertyEditorSection>
       <KustoWhereEditorSection
         templateVariableOptions={props.templateVariableOptions}
@@ -293,14 +294,14 @@ export const VisualQueryEditor: React.FC<Props> = props => {
         onChange={onGroupByChange}
       />
       <hr />
-      <KustoPropertyEditorSection
+      {/* <KustoPropertyEditorSection
         templateVariableOptions={[]}
         label="Timeshift"
         value={query.expression?.timeshift ?? defaultQuery.expression?.timeshift}
         fields={timeshiftOptions}
         onChange={onChangeTimeshift}
         allowCustom={true}
-      />
+      /> */}
       <div className={styles.query}>
         <TextArea cols={80} rows={8} value={props.query.query} disabled={true} />
       </div>
@@ -398,7 +399,7 @@ async function getTableSchema(datasource: AdxDataSource, databaseName: string, t
   return await schemaResolver.getColumnsForTable(databaseName, tableName);
 }
 
-const useTimeshiftOptions = (): QueryEditorPropertyDefinition[] => {
+/* const useTimeshiftOptions = (): QueryEditorPropertyDefinition[] => {
   return useMemo((): QueryEditorPropertyDefinition[] => {
     return [
       {
@@ -423,4 +424,4 @@ const useTimeshiftOptions = (): QueryEditorPropertyDefinition[] => {
       },
     ];
   }, []);
-};
+}; */
