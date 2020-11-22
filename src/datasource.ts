@@ -284,7 +284,7 @@ export class AdxDataSource extends DataSourceWithBackend<KustoQuery, AdxDataSour
               this.addFieldsToFrame(frame, f, headerFields[f]);
             } else {
               // In case of multi frame create one frame for one column
-              if (index !== 0) {
+              if (headerFields[f] !== 'datetime') {
                 const frame = this.createDataFrame(query, visualType, isLogData, query.logLimit);
                 this.addFieldsToFrame(frame, f, headerFields[f]);
 
@@ -311,6 +311,10 @@ export class AdxDataSource extends DataSourceWithBackend<KustoQuery, AdxDataSour
           // }
 
           Object.keys(rowObj).forEach(key => {
+            if (!headerFields[key]) {
+              return;
+            }
+
             rowResultData[key] = rowObj[key];
           });
         }
@@ -323,7 +327,7 @@ export class AdxDataSource extends DataSourceWithBackend<KustoQuery, AdxDataSour
             this.addUpdateValueToFrame(frameRef.default, rowResultData, columnSeq, headerFields, keyColumns);
           } else {
             Object.keys(rowResultData).forEach((key: any, i: number) => {
-              if (i === 0) {
+              if (headerFields[key] === 'datetime') {
                 return;
               }
 
@@ -390,7 +394,7 @@ export class AdxDataSource extends DataSourceWithBackend<KustoQuery, AdxDataSour
     keyColumns: string[]
   ) {
     const uniqueFields = keyColumns; //["__key__"];
-    const frameTimeStamps = frame.values[columnSeq[0]].toArray();
+    const frameTimeStamps = frame && frame.values[columnSeq[0]] ? frame.values[columnSeq[0]].toArray() : [];
 
     let updateAt = -1;
     if (!uniqueFields) {
