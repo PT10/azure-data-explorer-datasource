@@ -271,6 +271,7 @@ export class AdxDataSource extends DataSourceWithBackend<KustoQuery, AdxDataSour
           }
 
           const isLogData: boolean = Object.values(headerFields).includes('string');
+          const dateTimeField: any = Object.keys(headerFields).find(k => headerFields[k] === 'datetime');
 
           Object.keys(headerFields).forEach((f: string, index: number) => {
             // In case of single dataframe create one frame for all columns named default
@@ -287,6 +288,10 @@ export class AdxDataSource extends DataSourceWithBackend<KustoQuery, AdxDataSour
               if (headerFields[f] !== 'datetime') {
                 const frame = this.createDataFrame(query, visualType, isLogData, query.logLimit);
                 this.addFieldsToFrame(frame, f, headerFields[f]);
+
+                if (dateTimeField) {
+                  this.addFieldsToFrame(frame, dateTimeField, 'datetime');
+                }
 
                 frameRef[f] = frame;
               }
